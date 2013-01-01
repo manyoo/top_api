@@ -24,9 +24,9 @@ module TopApi
 
         def get(options)
           request options do |body|
-            resp = body[:taobaoke_items_get_response]
-            nums = resp[:total_results]
-            items = resp[:taobaoke_items][:taobaoke_item]
+            resp = body['taobaoke_items_get_response']
+            nums = resp['total_results']
+            items = resp['taobaoke_items']['taobaoke_item']
             yield(nums, items)
           end
         end

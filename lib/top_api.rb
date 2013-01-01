@@ -1,15 +1,14 @@
 require "top_api/version"
+require "top_api/config"
+require "top_api/rest_api"
+require "top_api/taobaoke"
 
 module TopApi
-  autoload :Config, "top_api/config"
-  autoload :RestApi, "top_api/rest_api"
-  autoload :Taobaoke, "top_api/taobaoke"
-
+  METHODS = {
+    :taobaoke_items_get => Taobaoke::Items::Get
+  }
+  
   class << self
-    METHODS = {
-      :taobaoke_items_get => Taobaoke::Items::Get
-    }
-
     def get_api(method)
       if METHODS.member? method
         METHODS[method].new

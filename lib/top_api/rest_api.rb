@@ -15,13 +15,14 @@ module TopApi
 
     def initialize
       @base_url = PRODUCTION
-      @app_key = ''
-      @app_secret = ''
-      @taobaoke_id = ''
+      @app_key = Config.settings[:app_key]
+      @app_secret = Config.settings[:app_secret]
+      @taobaoke_id = Config.settings[:taobaoke_id]
 
       @params = {:v => VERSION,
                  :format => FORMAT,
-                 :sign_method => SIGN_METHOD
+                 :sign_method => SIGN_METHOD,
+                 :app_key => @app_key
                 }
     end
 
@@ -43,7 +44,13 @@ module TopApi
       url = URI.parse build_url
       res = Net::HTTP.get_response(url)
       if res.code == '200'
-        yield(JSON.parse(res.body))
+        js = JSON.parse res.body
+        if js.member? 'error_response'
+          msg = js['error_response']['msg']
+          raise ArgumentError, msg
+        else
+          yield(js)
+        end
       end
     end
   end
