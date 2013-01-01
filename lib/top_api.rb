@@ -1,22 +1,19 @@
 require "top_api/version"
-require "top_api/rest_api"
-require "top_api/taobaoke"
 
-if defined?(Rails)
-  module TopApi
+module TopApi
+  autoload :Config, "top_api/config"
+  autoload :RestApi, "top_api/rest_api"
+  autoload :Taobaoke, "top_api/taobaoke"
+
+  class << self
     METHODS = {
       :taobaoke_items_get => Taobaoke::Items::Get
     }
 
-    class << self
-      def get_api(method)
-        if METHODS.member? method
-          METHODS[method].new
-        end
+    def get_api(method)
+      if METHODS.member? method
+        METHODS[method].new
       end
-    end
-
-    class TopApiRailtie < Rails::Railtie
     end
   end
 end
