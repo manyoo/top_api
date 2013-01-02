@@ -6,7 +6,8 @@ require "top_api/taobaoke"
 module TopApi
   METHODS = {
     :taobaoke_items_get => Taobaoke::Items::Get,
-    :taobaoke_coupon_get => Taobaoke::Coupon::Get
+    :taobaoke_coupon_get => Taobaoke::Coupon::Get,
+    :taobaoke_relate_get => Taobaoke::Relate::Get
   }
 
   class << self

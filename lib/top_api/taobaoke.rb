@@ -55,5 +55,25 @@ module TopApi
         end
       end
     end
+
+    module Relate
+      class Get < RestApi
+        def initialize
+          super
+          @params[:method] = 'taobao.taobaoke.items.relate.get'
+          @params[:pid] = @taobaoke_id
+          @params[:fields] = TaobaokeItemFields.join ','
+        end
+
+        def get options
+          request options do |body|
+            resp = body['taobaoke_items_relate_get_response']
+            num = resp['total_results']
+            items = resp['taobaoke_items']['taobaoke_item']
+            yield(num, items)
+          end
+        end
+      end
+    end
   end
 end
