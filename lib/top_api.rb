@@ -5,9 +5,10 @@ require "top_api/taobaoke"
 
 module TopApi
   METHODS = {
-    :taobaoke_items_get => Taobaoke::Items::Get
+    :taobaoke_items_get => Taobaoke::Items::Get,
+    :taobaoke_coupon_get => Taobaoke::Coupon::Get
   }
-  
+
   class << self
     def get_api(method)
       if METHODS.member? method

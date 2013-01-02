@@ -15,6 +15,7 @@ module TopApi
 
     def initialize
       @base_url = PRODUCTION
+      @base_url = SAND_BOX if Config.settings[:is_sandbox]
       @app_key = Config.settings[:app_key]
       @app_secret = Config.settings[:app_secret]
       @taobaoke_id = Config.settings[:taobaoke_id]
