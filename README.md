@@ -1,6 +1,6 @@
 # TopApi
 
-TODO: Write a gem description
+TopApi is a gem for the Taobao Open Platform (TOP) API.
 
 ## Installation
 
