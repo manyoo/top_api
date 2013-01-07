@@ -33,6 +33,24 @@ module TopApi
         end
       end
 
+      class Convert < RestApi
+        def initialize
+          super
+          @params[:method] = 'taobao.taobaoke.items.convert'
+          @params[:pid] = @taobaoke_id
+          @params[:fields] = TaobaokeItemFields.join ','
+        end
+
+        def get options
+          request options do |body|
+            resp = body['taobaoke_items_convert_response']
+            nums = resp['total_results']
+            items = resp['taobaoke_items']['taobaoke_item']
+            yield(nums, items)
+          end
+        end
+      end
+
       module Coupon
         class Get < RestApi
           def initialize
@@ -135,6 +153,23 @@ module TopApi
             num = resp['total_results']
             shops = resp['taobaoke_shops']['taobaoke_shop']
             yield(num, shops)
+          end
+        end
+      end
+
+      class Convert < RestApi
+        def initialize
+          super
+          @params[:method] = 'taobao.taobaoke.shops.convert'
+          @params[:pid] = @taobaoke_id
+          @params[:fields] = TaobaokeShopFields.join ','
+        end
+
+        def get options
+          request options do |body|
+            resp = body['taobaoke_shops_convert_response']
+            shops = resp['taobaoke_shops']['taobaoke_shop']
+            yield shops
           end
         end
       end
